@@ -27,6 +27,22 @@ o
 generate-env.ps1
 ```
 
+Previamente crearemos las imagenes del servicio para inicializar el conector de ELG y del servicio web que hace de intermediario entre el conector y ELG para poder descargar los datasets de ELG. 
+
+Para crear la imagen del primer servicio lo haremos con:
+```bash
+ git clone https://gitlab.expert.ai/inesdata_edl/inesdata-espacio-linguistico-elg-connector-setup.git
+ cd inesdata-espacio-linguistico-elg-connector-setup
+ docker build -t setup-elg-connector .
+ ```
+
+ Ahora para crear la imagen del servicio web intermediario (previamente es necesario [crear el token de autenticación para ELG]("https://gitlab.expert.ai/inesdata_edl/inesdata-espacio-linguistico-elg-web-service#elg-authentication-token-creation")):
+ ```bash
+ git clone https://gitlab.expert.ai/inesdata_edl/inesdata-espacio-linguistico-elg-web-service.git
+ cd inesdata-espacio-linguistico-elg-web-service
+ docker build -t elg_connector_ws .
+ ```
+
 Una vez hecho esto, se puede llamar a `docker compose up` para levantar el entorno.
 
 ```
