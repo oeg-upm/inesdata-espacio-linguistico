@@ -213,6 +213,9 @@ services:
     image: setup-elg-connector
     depends_on: 
       - connector-elg
+    environment:
+      - USER=user-elg
+      - PASSWORD=user-elg
       
   registration-service:
     image: ghcr.io/oeg-upm/inesdata-registration-service:0.6.0
