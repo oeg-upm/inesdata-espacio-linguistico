@@ -1,0 +1,19 @@
+{
+  "@context": {
+    "@vocab": "https://w3id.org/edc/v0.0.1/ns/"
+  },
+  "@id": "http-pull-consumer-dataplane",
+  "url": "http://connector-elg:39192/control/transfer",
+  "allowedSourceTypes": [
+    "HttpData",
+    "AmazonS3"
+  ],
+  "allowedDestTypes": [
+    "HttpProxy",
+    "HttpData",
+    "AmazonS3"
+  ],
+  "properties": {
+    "https://w3id.org/edc/v0.0.1/ns/publicApiUrl": "http://connector-elg:39291/public/"
+  }
+}

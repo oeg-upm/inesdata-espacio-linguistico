@@ -5,3 +5,4 @@ CREATE TABLE IF NOT EXISTS edc_accesstokendata
     data_address JSON    NOT NULL,
     additional_properties JSON DEFAULT '{}'
 );
+
