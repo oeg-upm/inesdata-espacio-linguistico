@@ -8,12 +8,13 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_MULTIPLE_DATABASES=keycloak,strapi,connector1,connector2,registrationservice
+      - POSTGRES_MULTIPLE_DATABASES=keycloak,strapi,connector1,connector2,connectorelg,registrationservice
     volumes: 
       - pgdata-common:/var/lib/postgresql/data
       - ./resources/postgres/init-multi-postgres-databases.sh:/docker-entrypoint-initdb.d/init-multi-postgres-databases.sh
       - ./resources/db-init/connector/:/docker-entrypoint-initdb.d/connector1
       - ./resources/db-init/connector/:/docker-entrypoint-initdb.d/connector2
+      - ./resources/db-init/connector/:/docker-entrypoint-initdb.d/connectorelg
       - ./resources/db-init/registrationservice/:/docker-entrypoint-initdb.d/registrationservice
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U postgres" ]
@@ -57,11 +58,30 @@ services:
       timeout: 20s
       retries: 3
 
+  minio-elg:
+    image: minio/minio
+    ports:
+      - '9020:9000'
+      - '9021:9021'
+    volumes:
+      - mdata-elg:/data
+    environment:
+      - MINIO_ROOT_USER=inesdata
+      - MINIO_ROOT_PASSWORD=inesdata
+      - MINIO_DEFAULT_BUCKETS=bucket-connector-elg
+    command: server --console-address ":9021" /data
+    healthcheck:
+      test: timeout 5s bash -c ':> /dev/tcp/127.0.0.1/9000' || exit 1
+      interval: 30s
+      timeout: 20s
+      retries: 3
+
   setup-minio:
     image: minio/mc
     depends_on:
       - minio-c1
       - minio-c2
+      - minio-elg
     entrypoint: >
       /bin/sh -c "
       /usr/bin/mc alias set minio-c1 http://minio-c1:9000 inesdata inesdata;
@@ -70,6 +90,9 @@ services:
       /usr/bin/mc alias set minio-c2 http://minio-c2:9000 inesdata inesdata;
       /usr/bin/mc admin user svcacct add minio-c2 inesdata --access-key wEfyrv2vH7Wj3ON03g8V --secret-key JlHVGgSgeRkbs6WtKTugR4I5uU7oA1VRf8kBtrGd;
       /usr/bin/mc mb minio-c2/bucket-connector-2;
+      /usr/bin/mc alias set minio-elg http://minio-elg:9000 inesdata inesdata;
+      /usr/bin/mc admin user svcacct add minio-elg inesdata --access-key lw308Hm1qu1nQ3PGy6Uw --secret-key 2ouuTRWWv2AqPafyu6bSMU1ABIwHRx9dabVKGoTN;
+      /usr/bin/mc mb minio-elg/bucket-connector-elg;
       exit 0;
       "
 
@@ -158,6 +181,39 @@ services:
       registration-service:
         condition: service_healthy
 
+  connector-elg:
+    image: ghcr.io/oeg-upm/inesdata-connector:0.8.0
+    ports:
+      - '39191:39191'
+      - '39192:39192'
+      - '39193:39193'
+      - '39194:39194'
+      - '39195:39195'
+      - '39291:39291'
+      - '39196:39196'
+    volumes:
+      - ./resources:/opt/connector/resources
+    environment:
+      - EDC_KEYSTORE=/opt/connector/resources/certs/store.pfx
+      - EDC_KEYSTORE_PASSWORD=inesdata
+      - EDC_FS_CONFIG=/opt/connector/resources/configuration/connector-elg-configuration.properties
+    depends_on:
+      postgres-common:
+        condition: service_healthy
+      minio-c2:
+        condition: service_healthy
+      keycloak:
+        condition: service_healthy
+      vault:
+        condition: service_healthy
+      registration-service:
+        condition: service_healthy
+  
+  setup-elg-connector:
+    image: setup-elg-connector
+    depends_on: 
+      - connector-elg
+      
   registration-service:
     image: ghcr.io/oeg-upm/inesdata-registration-service:0.6.0
     ports:
@@ -314,6 +370,11 @@ services:
     depends_on:
       vault:
         condition: service_healthy  
+
+  elg-connector-ws:
+    image: elg_connector_ws
+    ports:
+      - "5000:5000"
       
 volumes:
   pgdata-common:
@@ -321,6 +382,8 @@ volumes:
   mdata-c1:
     driver: local
   mdata-c2:
+    driver: local
+  mdata-elg:
     driver: local
   hvdata:
     driver: local

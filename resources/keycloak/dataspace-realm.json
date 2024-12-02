@@ -68,6 +68,22 @@
         "attributes": {}
       },
       {
+        "id": "83043f68-8a69-4861-bc4f-9b8090212935",
+        "name": "connector-elg",
+        "description": "",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "e754d0aa-9530-4c4b-871f-c29ccbfab6dd",
+        "attributes": {
+          "connector": [
+            "connector-elg"
+          ],
+          "connector-type": [
+            "inesdata-connector"
+          ]
+        }
+      },
+      {
         "id": "bf93e81d-9d1d-43a1-8ed9-ab2c188e4c1b",
         "name": "connector-c1",
         "description": "",
@@ -349,6 +365,7 @@
           "attributes": {}
         }
       ],
+      "connector-elg": [],
       "dataspace-users": [],
       "security-admin-console": [],
       "admin-cli": [],
@@ -480,6 +497,18 @@
         "connector-user"
       ],
       "clientRoles": {}
+    },
+    {
+      "id": "593def05-58df-454b-911e-66034e635f77",
+      "name": "connector-elg",
+      "path": "/connector-elg",
+      "subGroups": [],
+      "attributes": {},
+      "realmRoles": [
+        "connector-elg",
+        "connector-user"
+      ],
+      "clientRoles": {}
     }
   ],
   "defaultRole": {
@@ -566,6 +595,22 @@
       "groups": []
     },
     {
+      "id": "caa02087-3d94-4095-b751-4482af571e98",
+      "username": "service-account-connector-elg",
+      "emailVerified": false,
+      "createdTimestamp": 1732113546963,
+      "enabled": true,
+      "totp": false,
+      "serviceAccountClientId": "connector-elg",
+      "disableableCredentialTypes": [],
+      "requiredActions": [],
+      "realmRoles": [
+        "default-roles-dataspace"
+      ],
+      "notBefore": 0,
+      "groups": []
+    },
+    {
       "username": "user-c1",
       "createdTimestamp": 1710521195533,
       "email": "user-c1@inesdata.com",
@@ -605,6 +650,27 @@
       ],
       "groups": [
           "connector-c2"
+      ]
+    },
+    {
+      "username": "user-elg",
+      "createdTimestamp": 1710521195633,
+      "email": "user-elg@inesdata.com",
+      "firstName": "user-elg",
+			"lastName": "user-elg",
+			"attributes": {
+				"region": "eu"
+			},
+      "emailVerified": true,
+      "enabled": true,
+      "credentials": [
+          {
+              "type": "password",
+              "value": "user-elg"
+          }
+      ],
+      "groups": [
+          "connector-elg"
       ]
     },
     {
@@ -1045,6 +1111,115 @@
         "offline_access",
         "microprofile-jwt"
       ]
+    },
+    {
+      "clientId": "connector-elg",
+      "name": "connector-elg",
+      "description": "Inesdata: Cliente para el conector connector-elg",
+      "rootUrl": "",
+      "adminUrl": "",
+      "baseUrl": "",
+      "surrogateAuthRequired": false,
+      "enabled": true,
+      "alwaysDisplayInConsole": false,
+      "clientAuthenticatorType": "client-jwt",
+      "secret": "**********",
+      "redirectUris": [
+        "/*"
+      ],
+      "webOrigins": [
+        "/*"
+      ],
+      "notBefore": 0,
+      "bearerOnly": false,
+      "consentRequired": false,
+      "standardFlowEnabled": false,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": true,
+      "serviceAccountsEnabled": true,
+      "publicClient": false,
+      "frontchannelLogout": true,
+      "protocol": "openid-connect",
+      "attributes": {
+        "oidc.ciba.grant.enabled": "false",
+        "client.secret.creation.time": "1732113546",
+        "backchannel.logout.session.required": "true",
+        "post.logout.redirect.uris": "+",
+        "display.on.consent.screen": "false",
+        "oauth2.device.authorization.grant.enabled": "false",
+        "backchannel.logout.revoke.offline.tokens": "false",
+        "jwt.credential.certificate": "MIIDETCCAfkCFBEOuzF+mRgrzrxVv70zNDUEv+nUMA0GCSqGSIb3DQEBCwUAMEUxCzAJBgNVBAYTAkFVMRMwEQYDVQQIDApTb21lLVN0YXRlMSEwHwYDVQQKDBhJbnRlcm5ldCBXaWRnaXRzIFB0eSBMdGQwHhcNMjQwMTMxMTIyNTUyWhcNMjUwMTMwMTIyNTUyWjBFMQswCQYDVQQGEwJBVTETMBEGA1UECAwKU29tZS1TdGF0ZTEhMB8GA1UECgwYSW50ZXJuZXQgV2lkZ2l0cyBQdHkgTHRkMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxHbsW755sB/5YwjPyk0xPJwyQkxkGV2SS4sQQCCz8KV/QoEilk/PzUqUsE2e7LqavWL5+FPSic79ZKEljeeNB1z5xoE2YnKEs55MLi/PgfLJHJ9MbA42lJBYI37MeGv0kGkIQDIrtpDjBfSgGSINXeTjs0T/l5sXXPTfSRm4URWX3I+QO9ACYLb7Cz//G8HdYHp8MHNa38x4BeBku7cT7xgEUPfhu4LCnBW1u0pMbeT8A2M9zz/TIOJKwUeupacXjJ/tqHGLYMgBLCSRNK4zFJiGzhDbEZA6+NMUp660t7Su6M5ix3WIffKlIcxi0bnk9slhjK5NynJ3H/uvbfYnCwIDAQABMA0GCSqGSIb3DQEBCwUAA4IBAQBAttZGxh1k87S8OHA6L8fmu/PEtjdkJV3Cu7J3xTGfmSBVMTStl2NI4D4iFJUFdTJjvEibEaQEETz2zJakwdp7JGG7ip7e/dKsP0wVMC63MZ8eeDzST7IzBLk6mjb+Co0+2p/9rHPBz1AFpHRcJ9jaORh8FlctfcxcBsr6dMptGtCZMzam26WwePxapNd+wBNFHuAXHyTzHl3NIq2Bd+56Roen5muZKv4xqI7iVBbVrejvVyXNDhrqh9QBVushjclGdc2GSdCVpUhiv1srX59/yX5HBZG8HRQSgCXpcSiGIhiMmd1gaU/qrXa8kwmd6tdKUcAiLU7qXEJX4iBziobm"
+      },
+      "authenticationFlowBindingOverrides": {},
+      "fullScopeAllowed": true,
+      "nodeReRegistrationTimeout": -1,
+      "protocolMappers": [
+        {
+          "name": "Client ID",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usersessionmodel-note-mapper",
+          "consentRequired": false,
+          "config": {
+            "user.session.note": "client_id",
+            "introspection.token.claim": "true",
+            "userinfo.token.claim": "true",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "claim.name": "client_id",
+            "jsonType.label": "String"
+          }
+        },
+        {
+          "name": "Client Host",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usersessionmodel-note-mapper",
+          "consentRequired": false,
+          "config": {
+            "user.session.note": "clientHost",
+            "introspection.token.claim": "true",
+            "userinfo.token.claim": "true",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "claim.name": "clientHost",
+            "jsonType.label": "String"
+          }
+        },
+        {
+          "name": "Client IP Address",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usersessionmodel-note-mapper",
+          "consentRequired": false,
+          "config": {
+            "user.session.note": "clientAddress",
+            "introspection.token.claim": "true",
+            "userinfo.token.claim": "true",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "claim.name": "clientAddress",
+            "jsonType.label": "String"
+          }
+        }
+      ],
+      "defaultClientScopes": [
+        "web-origins",
+        "acr",
+        "roles",
+        "profile",
+        "inesdata-local-dataspace-audience",
+        "email",
+        "inesdata-nbf-claim"
+      ],
+      "optionalClientScopes": [
+        "address",
+        "phone",
+        "offline_access",
+        "microprofile-jwt"
+      ],
+      "access": {
+        "view": true,
+        "configure": true,
+        "manage": true
+      }
     },
     {
       "id": "7105cc02-9752-48e7-89f5-3b7346720749",
@@ -1919,14 +2094,14 @@
         "subComponents": {},
         "config": {
           "allowed-protocol-mapper-types": [
-            "saml-role-list-mapper",
-            "oidc-sha256-pairwise-sub-mapper",
-            "saml-user-attribute-mapper",
-            "oidc-full-name-mapper",
-            "saml-user-property-mapper",
+            "oidc-usermodel-attribute-mapper",
             "oidc-address-mapper",
+            "oidc-full-name-mapper",
+            "oidc-sha256-pairwise-sub-mapper",
+            "saml-user-property-mapper",
             "oidc-usermodel-property-mapper",
-            "oidc-usermodel-attribute-mapper"
+            "saml-role-list-mapper",
+            "saml-user-attribute-mapper"
           ]
         }
       },
@@ -1938,14 +2113,14 @@
         "subComponents": {},
         "config": {
           "allowed-protocol-mapper-types": [
+            "oidc-usermodel-property-mapper",
+            "oidc-usermodel-attribute-mapper",
+            "oidc-full-name-mapper",
+            "oidc-address-mapper",
             "oidc-sha256-pairwise-sub-mapper",
             "saml-user-attribute-mapper",
             "saml-user-property-mapper",
-            "saml-role-list-mapper",
-            "oidc-full-name-mapper",
-            "oidc-usermodel-attribute-mapper",
-            "oidc-usermodel-property-mapper",
-            "oidc-address-mapper"
+            "saml-role-list-mapper"
           ]
         }
       }
@@ -2672,7 +2847,7 @@
     "shortVerificationUri": "",
     "actionTokenGeneratedByUserLifespan.reset-credentials": ""
   },
-  "keycloakVersion": "24.0.1",
+  "keycloakVersion": "24.0.2",
   "userManagedAccessAllowed": false,
   "clientProfiles": {
     "profiles": []

@@ -27,3 +27,5 @@ INSERT INTO edc_participant (participant_id,url,created_at,shared_url) VALUES ('
 http://connector-c1:19194/protocol',42893849,'http://connector-c1:19196/shared');
 INSERT INTO edc_participant (participant_id,url,created_at,shared_url) VALUES ('connector-c2','
 http://connector-c2:29194/protocol',42893849,'http://connector-c2:29196/shared');
+INSERT INTO edc_participant (participant_id,url,created_at,shared_url) VALUES ('connector-elg','
+http://connector-elg:39194/protocol',42893849,'http://connector-elg:39196/shared');
