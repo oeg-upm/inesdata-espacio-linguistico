@@ -36,9 +36,9 @@ Para crear la imagen del primer servicio lo haremos con:
  docker build -t setup-elg-connector .
  ```
 
- Ahora para crear la imagen del servicio web intermediario (antes de hacer el build es necesario [crear el token de autenticación para ELG](https://gitlab.expert.ai/inesdata_edl/inesdata-espacio-linguistico-elg-web-service#elg-authentication-token-creation)):
+ Ahora para crear la imagen del servicio web intermediario (antes de hacer el build es necesario [crear el token de autenticación para ELG](https://github.com/oeg-upm/inesdata-espacio-linguistico-elg-web-service#elg-authentication-token-creation)):
  ```bash
- git clone https://gitlab.expert.ai/inesdata_edl/inesdata-espacio-linguistico-elg-web-service.git
+ git clone https://github.com/oeg-upm/inesdata-espacio-linguistico-elg-web-service.git
  cd inesdata-espacio-linguistico-elg-web-service
  docker build -t elg_connector_ws .
  ```
