@@ -31,8 +31,8 @@ Previamente crearemos las imagenes del servicio para inicializar el conector de 
 
 Para crear la imagen del primer servicio lo haremos con:
 ```bash
- git clone https://gitlab.expert.ai/inesdata_edl/inesdata-espacio-linguistico-elg-connector-setup.git
- cd inesdata-espacio-linguistico-elg-connector-setup
+ git clone https://github.com/oeg-upm/inesdata-espacio-linguistico-elg-connector.git
+ cd inesdata-espacio-linguistico-elg-connector
  docker build -t setup-elg-connector .
  ```
 
